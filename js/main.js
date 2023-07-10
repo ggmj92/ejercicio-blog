@@ -1,8 +1,6 @@
 //variables + constantes
 let arrayPosts = [];
 
-
-
 // fetch('https://jsonplaceholder.typicode.com/posts')
 //     .then(res=>res.json())
 //     .then(respuesta=> arrayPosts = respuesta)
@@ -41,16 +39,16 @@ let arrayPosts = [];
 //         console.log(error);
 //     });
 
-const info = async()=>{
+const info = async () => {
     try {
         let resp = await fetch('https://jsonplaceholder.typicode.com/posts')
 
-        if(resp.ok){
-            arrayPosts=await resp.json();
+        if (resp.ok) {
+            arrayPosts = await resp.json();
             pintarArray();
 
-        }else{
-            throw('error!') 
+        } else {
+            throw ('error!')
         }
     } catch (error) {
         console.log(error);
@@ -58,21 +56,30 @@ const info = async()=>{
 };
 
 function pintarArray() {
-    const cajaPost = document.createElement('section');
+    const cajaPost = document.querySelector('.container');
 
-    for (let i = 0; i < arrayPosts.length; i++) {
+    // for (let i = 0; i < arrayPosts.length; i++) {
+    arrayPosts.forEach((post) => {
+        const section = document.createElement('section')
         const titulo = document.createElement('h3');
         const texto = document.createElement('p');
 
-        titulo.textContent = arrayPosts[i].title;
-        texto.textContent = arrayPosts[i].body;
+        titulo.innerHTML = post.title;
+        texto.innerHTML = post.body;
+        // titulo.textContent = arrayPosts[i].title;
+        // texto.textContent = arrayPosts[i].body;
 
-        cajaPost.appendChild(titulo);
-        cajaPost.appendChild(texto);
-    }
+        // cajaPost.appendChild(titulo);
+        // cajaPost.appendChild(texto);
 
-    document.getElementById('titulo').appendChild(cajaPost);
-    document.getElementById('texto').appendChild(cajaPost);
+        section.append(titulo);
+        section.append(texto);
+
+        cajaPost.append(section);
+    });
+
+    // document.getElementById('titulo').appendChild(cajaPost);
+    // document.getElementById('texto').appendChild(cajaPost);
 }
 
 info();
